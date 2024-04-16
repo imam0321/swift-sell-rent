@@ -60,10 +60,6 @@ const NavBar = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -78,9 +74,9 @@ const NavBar = () => {
   };
 
   const menuOptions = (
-    <Box sx={{ display: { xs: "block", md: "flex" } }}>
+    <Box sx={{ display: { xs: "block", md: "flex" }}}>
       <MenuItem onClick={handleMenuClose}>
-        <NavLink to="/home">Home</NavLink>
+        <NavLink to="/">Home</NavLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
         <NavLink to="/about">About</NavLink>
@@ -108,8 +104,6 @@ const NavBar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
 
@@ -131,9 +125,6 @@ const NavBar = () => {
       onClose={handleMobileMenuClose}
     >
       {menuOptions}
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <p>Profile</p>
-      </MenuItem>
     </Menu>
   );
 
@@ -160,7 +151,7 @@ const NavBar = () => {
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {menuOptions}
-            <NavLink to="/profile">
+            <NavLink to="/">
               <IconButton
                 size="large"
                 edge="end"
