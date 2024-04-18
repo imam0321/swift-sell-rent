@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Google } from '@mui/icons-material';
+import useAuth from '../../hooks/useAuth';
 
 function Copyright(props) {
   return (
@@ -22,14 +23,22 @@ function Copyright(props) {
 }
 const defaultTheme = createTheme();
 
+
 const SignUp = () => {
+  const {createUser} = useAuth()
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // const username = data.get('username');
+    const email = data.get('email');
+    const password = data.get('password');
+    // create Users 
+    createUser(email, password)
+      .then(() => {
+        console.log('create successful'); 
+      }) 
+      .catch(error => console.log(error.message))
   };
   
 
@@ -61,7 +70,7 @@ const SignUp = () => {
                   label="Username"
                   autoFocus
                   variant="outlined" 
-                  color="success"
+                  color="warning"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -73,7 +82,7 @@ const SignUp = () => {
                   name="email"
                   autoComplete="email"
                   variant="outlined" 
-                  color="success"
+                  color="warning"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -86,7 +95,7 @@ const SignUp = () => {
                   id="password"
                   autoComplete="new-password"
                   variant="outlined" 
-                  color="success"
+                  color="warning"
                 />
               </Grid>
             </Grid>

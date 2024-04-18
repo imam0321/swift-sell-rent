@@ -84,6 +84,9 @@ const NavBar = () => {
       <MenuItem onClick={handleMenuClose}>
         <NavLink to="/signIn">Sign In</NavLink>
       </MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+        <NavLink to="/signUp">Sign Up</NavLink>
+      </MenuItem>
     </Box>
   );
 
