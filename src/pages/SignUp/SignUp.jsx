@@ -1,19 +1,24 @@
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Google } from '@mui/icons-material';
-import useAuth from '../../hooks/useAuth';
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Google } from "@mui/icons-material";
+import useAuth from "../../hooks/useAuth";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="/">
         Your Website
       </Link>
@@ -23,24 +28,23 @@ function Copyright(props) {
 }
 const defaultTheme = createTheme();
 
-
 const SignUp = () => {
-  const {createUser} = useAuth()
+  const { createUser, updateUserProfile } = useAuth();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // const username = data.get('username');
-    const email = data.get('email');
-    const password = data.get('password');
-    // create Users 
+    // const name = data.get('name');
+    const email = data.get("email");
+    const password = data.get("password");
+
+    // create Users
     createUser(email, password)
-      .then(() => {
-        console.log('create successful'); 
-      }) 
-      .catch(error => console.log(error.message))
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.log(error.message));
   };
-  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -49,27 +53,31 @@ const SignUp = () => {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          
           <Typography component="h1" variant="h3">
             Sign Up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="username"
+                  name="name"
                   required
                   fullWidth
-                  id="username"
-                  label="Username"
+                  id="name"
+                  label="Full Name"
                   autoFocus
-                  variant="outlined" 
+                  variant="outlined"
                   color="warning"
                 />
               </Grid>
@@ -81,7 +89,7 @@ const SignUp = () => {
                   label="Email"
                   name="email"
                   autoComplete="email"
-                  variant="outlined" 
+                  variant="outlined"
                   color="warning"
                 />
               </Grid>
@@ -94,7 +102,7 @@ const SignUp = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  variant="outlined" 
+                  variant="outlined"
                   color="warning"
                 />
               </Grid>
@@ -103,19 +111,30 @@ const SignUp = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 1, backgroundColor: '#424242', color: 'white', "&:hover":{
-                backgroundColor: "#616161",
-              }}}
+              sx={{
+                mt: 1,
+                backgroundColor: "#424242",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#616161",
+                },
+              }}
             >
               Sign Up
             </Button>
             <Button
               fullWidth
               variant="contained"
-              startIcon={<Google/>}
-              sx={{ mt: 1, mb: 2, backgroundColor: '#e53935', color: 'white', "&:hover":{
-                backgroundColor: '#f44336',
-              }}}
+              startIcon={<Google />}
+              sx={{
+                mt: 1,
+                mb: 2,
+                backgroundColor: "#e53935",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#f44336",
+                },
+              }}
             >
               Continue with Google
             </Button>
@@ -132,7 +151,6 @@ const SignUp = () => {
       </Container>
     </ThemeProvider>
   );
-}
-
+};
 
 export default SignUp;
