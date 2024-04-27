@@ -12,6 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { NavLink } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -56,6 +57,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavBar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const {user, logOut} = useAuth();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -72,6 +74,11 @@ const NavBar = () => {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  const handleLogOut = () => {
+    logOut()
+    .then(() => {})
+    .catch(() => {})
+  }
 
   const menuOptions = (
     <Box sx={{ display: { xs: "block", md: "flex" }}}>
@@ -81,12 +88,12 @@ const NavBar = () => {
       <MenuItem onClick={handleMenuClose}>
         <NavLink to="/about">About</NavLink>
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
+      {user ? <MenuItem onClick={handleMenuClose} sx={{color: "green", fontWeight: '600'}}><NavLink onClick={handleLogOut}>LogOut</NavLink></MenuItem> : <MenuItem onClick={handleMenuClose}>
         <NavLink to="/signIn">Sign In</NavLink>
-      </MenuItem>
-      <MenuItem onClick={handleMenuClose}>
+      </MenuItem>}
+      {user ? <MenuItem onClick={handleMenuClose} sx={{color: "green", fontWeight: '600'}}>{user.displayName}</MenuItem> : <MenuItem onClick={handleMenuClose}>
         <NavLink to="/signUp">Sign Up</NavLink>
-      </MenuItem>
+      </MenuItem>}
     </Box>
   );
 

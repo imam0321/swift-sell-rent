@@ -9,6 +9,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Google } from "@mui/icons-material";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+// import { Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -30,18 +33,33 @@ const defaultTheme = createTheme();
 
 const SignUp = () => {
   const { createUser, updateUserProfile } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // const name = data.get('name');
+    const name = data.get('name');
     const email = data.get("email");
     const password = data.get("password");
 
     // create Users
     createUser(email, password)
-      .then((data) => {
-        console.log(data);
+      .then(() => {
+        updateUserProfile(name)
+        .then(async ()=> {
+          const user = {name, email}
+          const res = await axiosSecure.post('/users', user)
+          const data = res.data;
+          return data
+        })
+        .then((data) => {
+          console.log(data);
+          if (data.insertedId) {
+            // <Alert severity="success">Your successfully SignUp.</Alert>
+            navigate('/');
+          }
+        })
       })
       .catch((error) => console.log(error.message));
   };
