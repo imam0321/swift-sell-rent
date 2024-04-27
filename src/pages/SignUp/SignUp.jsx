@@ -39,7 +39,7 @@ const SignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const name = data.get('name');
+    const name = data.get("name");
     const email = data.get("email");
     const password = data.get("password");
 
@@ -47,19 +47,19 @@ const SignUp = () => {
     createUser(email, password)
       .then(() => {
         updateUserProfile(name)
-        .then(async ()=> {
-          const user = {name, email}
-          const res = await axiosSecure.post('/users', user)
-          const data = res.data;
-          return data
-        })
-        .then((data) => {
-          console.log(data);
-          if (data.insertedId) {
-            // <Alert severity="success">Your successfully SignUp.</Alert>
-            navigate('/');
-          }
-        })
+          .then(async () => {
+            const user = { name, email };
+            const res = await axiosSecure.post("/users", user);
+            const data = res.data;
+            return data;
+          })
+          .then((data) => {
+            console.log(data);
+            if (data.insertedId) {
+              // <Alert severity="success">Your successfully SignUp.</Alert>
+              navigate("/");
+            }
+          });
       })
       .catch((error) => console.log(error.message));
   };
